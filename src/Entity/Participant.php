@@ -6,25 +6,35 @@ use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @UniqueEntity(fields={"mail"})
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
  */
-class Participant
+class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Merci d'indiquer votre nom")
+     * @Assert\Length(max=100)
      * @ORM\Column(type="string", length=100)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Merci d'indiquer votre prénom")
+     * @Assert\Length(max=100)
      * @ORM\Column(type="string", length=100)
      */
     private $prenom;
@@ -35,15 +45,20 @@ class Participant
     private $telephone;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @Assert\NotBlank(message="Merci d'indiquer votre mail")
+     * @Assert\Email(message="L'adresse mail n'est pas valide")
+     * @Assert\Length(max=180)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $mail;
 
     /**
+     * @Assert\NotBlank(message="Merci d'indiquer votre mot de passe")
+     * @Assert\Length(max=100)
+     * @Assert\NotCompromisedPassword(message="Votre mot de passe n'est pas sécurisé.")
      * @ORM\Column(type="string", length=100)
      */
-    private $motpasse;
-
+    private $motPasse;
     /**
      * @ORM\Column(type="boolean")
      */
@@ -63,11 +78,22 @@ class Participant
     /**
      * @ORM\ManyToMany(targetEntity=Sortie::class, inversedBy="participants")
      */
-    private $sortie;
+    private $sorties;
+
+    /**
+     * @ORM\Column(type="string", length=180)
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateur")
+     */
+    private $organisateur;
 
     public function __construct()
     {
-        $this->sortie = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
+        $this->organisateur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,14 +149,14 @@ class Participant
         return $this;
     }
 
-    public function getMotpasse(): ?string
+    public function getMotPasse(): ?string
     {
-        return $this->motpasse;
+        return $this->motPasse;
     }
 
-    public function setMotpasse(string $motpasse): self
+    public function setMotPasse(string $motPasse): self
     {
-        $this->motpasse = $motpasse;
+        $this->motPasse = $motPasse;
 
         return $this;
     }
@@ -174,15 +200,15 @@ class Participant
     /**
      * @return Collection<int, Sortie>
      */
-    public function getSortie(): Collection
+    public function getSorties(): Collection
     {
-        return $this->sortie;
+        return $this->sorties;
     }
 
     public function addSortie(Sortie $sortie): self
     {
-        if (!$this->sortie->contains($sortie)) {
-            $this->sortie[] = $sortie;
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties[] = $sortie;
         }
 
         return $this;
@@ -190,7 +216,79 @@ class Participant
 
     public function removeSortie(Sortie $sortie): self
     {
-        $this->sortie->removeElement($sortie);
+        $this->sorties->removeElement($sortie);
+
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->administrateur ?["ROLE_ADMIN"]:["ROLE_USER"];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->motPasse;
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+    public function getUsername(): string
+    {
+     return $this->mail;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->mail;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getOrganisateur(): Collection
+    {
+        return $this->organisateur;
+    }
+
+    public function addOrganisateur(Sortie $organisateur): self
+    {
+        if (!$this->organisateur->contains($organisateur)) {
+            $this->organisateur[] = $organisateur;
+            $organisateur->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganisateur(Sortie $organisateur): self
+    {
+        if ($this->organisateur->removeElement($organisateur)) {
+            // set the owning side to null (unless already changed)
+            if ($organisateur->getOrganisateur() === $this) {
+                $organisateur->setOrganisateur(null);
+            }
+        }
 
         return $this;
     }

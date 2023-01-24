@@ -6,6 +6,7 @@ use App\Repository\VilleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=VilleRepository::class)
@@ -20,11 +21,15 @@ class Ville
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Merci d'indiquer le nom de la ville.")
+     * @Assert\Length(max=100)
      * @ORM\Column(type="string", length=100)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Merci d'indiquer le code postal.")
+     * @Assert\Length(max=5)
      * @ORM\Column(type="string", length=5)
      */
     private $codePostal;

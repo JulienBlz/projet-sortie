@@ -36,9 +36,9 @@ class Sortie
 
     /**
      * @Assert\NotBlank(message="Merci d'indiquer la durée.")
-     * @Assert\GreaterThanOrEqual(propertyPath="dateHeureDebut")
      * @ORM\Column(type="integer", nullable=true)
      */
+
     private $duree;
 
     /**

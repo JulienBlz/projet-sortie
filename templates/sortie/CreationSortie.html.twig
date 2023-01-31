@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une sortie !{% endblock %}
+
+{% block body %}
+
+    <h2>Créer une sortie !</h2>
+
+    {{ form_start(sortieForm) }}
+    {{ form_row(sortieForm.nom) }}
+    {{ form_row(sortieForm.dateHeureDebut  ) }}
+    {{ form_row(sortieForm.duree) }}
+    {{ form_row(sortieForm.dateLimiteInscription) }}
+    {{ form_row(sortieForm.nbInscriptionsMax) }}
+    {{ form_row(sortieForm.infosSortie) }}
+
+    <div>
+        {{ form_label(sortieForm.lieu) }}
+        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#locationModal">+</button>
+    </div>
+
+    {{ form_widget(sortieForm.lieu) }}
+    {{ form_errors(sortieForm.lieu) }}
+
+    {# <div>
+    <button type="submit" class="btn btn-sm btn-primary" name ="enregistrer">Enregistrer</button>
+    <button type="submit" class="btn btn-sm btn-primary" name="publier">Publier la sortie</button>
+    <button type="submit" class="btn btn-sm btn-primary" name="supprimer">Supprimer la sortie</button>
+    </div> #}
+
+    {{ form_end(sortieForm) }}
+
+{% endblock %}
+
+

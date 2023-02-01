@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,23 @@ class SortieRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function listeSortiesDefaut(Participant $user): array
+    {
+        $campus = $user->getCampus();
+
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.site_organisateur = :campus')
+            ->setParameter('campus', $campus)
+            ->andWhere('s.dateHeureDebut >= :date')
+            ->setParameter('date', date('Y-m-d H:i:s'))
+            ->andWhere('s.organisateur = :user OR s.etat != 1')
+            ->setParameter('user', $user)->getQuery()->getResult();
+
+        //  $paginator = new Paginator($qb->getQuery());
+
+        // return $paginator;
     }
 
 //    /**

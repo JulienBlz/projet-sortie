@@ -8,8 +8,11 @@ use App\Entity\Sortie;
 use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Ville;
+use App\filtre\Recherche;
 use App\Form\SortieType;
+use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
+use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,24 +44,44 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
         //gerrer l'état:
-        $etatCree = $etatRepository -> findOneBy(array('libelle' => 'Créée'));
-        $etatOuvert = $etatRepository -> findOneBy(array('libelle' => 'Ouverte'));
+        $etatCree = $etatRepository->findOneBy(array('libelle' => 'Créée'));
+        $etatOuvert = $etatRepository->findOneBy(array('libelle' => 'Ouverte'));
 
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid()){
+        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
-            if ($sortieForm->get('save')->isClicked()) {$sortie ->setEtat($etatCree);}
-            else if ($sortieForm->get('publish')->isClicked()) {$sortie ->setEtat($etatOuvert);}
+            if ($sortieForm->get('save')->isClicked()) {
+                $sortie->setEtat($etatCree);
+            } else if ($sortieForm->get('publish')->isClicked()) {
+                $sortie->setEtat($etatOuvert);
+            }
 
             $entityManager->persist($sortie);
             $entityManager->flush();
             $this->addFlash('success', 'Sortie créee!!');
 
-          //todo: rediriger vers page détail des sorties.
-          return $this->redirectToRoute ( 'main_home');
+            //todo: rediriger vers page détail des sorties.
+            return $this->redirectToRoute('main_home');
         }
 
-        return $this->render('sortie/CreationSortie.html.twig',[
+        return $this->render('sortie/CreationSortie.html.twig', [
             "sortieForm" => $sortieForm->createView()
-    ]);
+        ]);
+    }
+
+    /**
+     * @Route("/sortie/liste", name="sortie_liste")
+     */
+    public function list(SortieRepository $sortieRepository, EtatRepository $etatRepository, EntityManagerInterface $entityManager, CampusRepository $campusRepository, Request $request): Response
+    {
+        //je recupere mon user connecté :
+        $user = $this->getUser();
+        $sorties = $sortieRepository->listeSortiesDefaut($user);
+
+       //je recupere ma liste de sorties trier par defaut
+       // $campuss = $campusRepository -> findAll();
+
+        return $this->render('sortie/liste.html.twig', ["sorties" => $sorties,
+           // "campuss" => $campuss,
+        ]);
     }
 }

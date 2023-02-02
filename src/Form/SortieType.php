@@ -27,7 +27,7 @@ class SortieType extends AbstractType
                 'widget' => 'single_text',
             ])
 
-            ->add('duree', IntegerType::class, ['label' => 'Durée de la sortie (en minute!)'])
+            ->add('duree', IntegerType::class, ['label' => 'Durée de la sortie (en minute)'])
 
 
             //todo : date pas datetype
@@ -39,7 +39,7 @@ class SortieType extends AbstractType
 
             ->add('nbInscriptionsMax', IntegerType::class, ['label' => 'Nombre maximum de participants a la sortie'])
 
-            ->add('infosSortie', null, ['label' => "Plus d'infos sur la sortie !"])
+            ->add('infosSortie', null, ['label' => "Plus d'infos sur la sortie"])
 
 
             ->add('lieu', EntityType::class, [

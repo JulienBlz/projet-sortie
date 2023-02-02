@@ -27,7 +27,7 @@ class ParticipantType extends AbstractType
                     'minlength' => 2,
                     'maxlength' => 70,
                 ],
-                'label' => 'nom',
+                'label' => 'Nom',
                 'label_attr' => [
                     'class'=>'form-label mt-4',
                 ],
@@ -36,13 +36,14 @@ class ParticipantType extends AbstractType
                 ]
 
             ])
+
             ->add('prenom',TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => 2,
                     'maxlength' => 70,
                 ],
-                'label' => 'prenom',
+                'label' => 'Prénom',
                 'label_attr' => [
                     'class'=>'form-label mt-4',
                 ],
@@ -51,13 +52,14 @@ class ParticipantType extends AbstractType
                 ]
 
             ])
+
             ->add('telephone',NumberType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => 10,
                     'maxlength' => 10,
                 ],
-                'label' => 'telephone',
+                'label' => 'Téléphone',
                 'label_attr' => [
                     'class'=>'form-label mt-4',
                 ],
@@ -66,13 +68,14 @@ class ParticipantType extends AbstractType
                 ]
 
             ])
+
             ->add('mail',EmailType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => 2,
                     'maxlength' => 70,
                 ],
-                'label' => 'mail',
+                'label' => 'Mail',
                 'label_attr' => [
                     'class'=>'form-label mt-4',
                 ],
@@ -82,34 +85,38 @@ class ParticipantType extends AbstractType
 
 
             ])
+
             ->add('motPasse',PasswordType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => 2,
                     'maxlength' => 70,
                 ],
-                'label' => 'votre nouveau mot de passe',
+                'label' => 'Votre nouveau mot de passe',
                 'label_attr' => [
                     'class'=>'form-label mt-4',
             ]])
+
             ->add('pseudo',TextType::class, [
         'attr' => [
             'class' => 'form-control',
             'minlength' => 2,
             'maxlength' => 70,
         ],
-        'label' => 'pseudo',
+        'label' => 'Pseudo',
         'label_attr' => [
             'class'=>'form-label mt-4',
         ],
         'constraints' => [
             new assert\Length(['min' => 2, 'max' => 70])
         ]])//ici on utiliser entitytype pour pouvoir generer automatiquement le scorwling pour la liste des campus
+
             ->add('campus', EntityType::class, [
-                'label' => 'campus',
+                'label' => 'Campus',
                 'class' => Campus::class,
                 'choice_label' => 'nom',]);
-            $builder->add('enregister', SubmitType::class, [
+
+        $builder->add('enregister', SubmitType::class, [
                 'attr' => ['class' => 'save'],
             ]);
 

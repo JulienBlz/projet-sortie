@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AffichageprecisController!{% endblock %}
+
+{% block body %}
+<h1>Sortie</h1>
+
+<table>
+    <tr>
+        <th>Nom :</th>
+        <td>{{ sortie.nom }}</td>
+    </tr>
+    <tr>
+        <th>Date Heure Début :</th>
+        <td>{{ sortie.dateHeureDebut|format_datetime }}</td>
+    </tr>
+    <tr>
+        <th>Durée :</th>
+        <td>{{ sortie.duree}}</td>
+    </tr>
+    <tr>
+        <th>Date Limite Inscription :</th>
+        <td>{{ sortie.dateLimiteInscription|format_datetime }}</td>
+    </tr>
+    <tr>
+        <th>Nb Inscriptions Max :</th>
+        <td>{{ sortie.nbInscriptionsMax|number_format }}</td>
+    </tr>
+    <tr>
+        <th>Infos Sortie :</th>
+        <td>{{ sortie.infosSortie }}</td>
+    </tr>
+    <tr>
+        <th>Participants :</th>
+        <td>{% for participants in sortie.participants %}
+            {{ sortie.participants.pseudo }}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <th>Organisateur :</th>
+        <td>
+            {{ sortie.organisateur.pseudo }}
+
+        </td>
+    </tr>
+    <tr>
+        <th>Etat :</th>
+        <td>
+            {{ sortie.etat.libelle}}
+        </td>
+    </tr>
+    <tr>
+        <th>Site organisateur :</th>
+        <td>
+            {{ sortie.siteOrganisateur.nom }}
+        </td>
+    </tr>
+</table>
+{% endblock %}

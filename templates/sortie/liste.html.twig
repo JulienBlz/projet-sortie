@@ -18,7 +18,7 @@
         </tr>
         {% for sortie in sorties %}
             <tr>
-                <td> {{ sortie.nom }} </td>
+                <td><a href="{{ path('app_sortie_detaille',{'id': sortie.id}) }}">{{ sortie.nom }}</a>  </td>
                 <td> {{ sortie.dateHeureDebut|date ('d/m/y H:i') }} </td>
                 <td> {{ sortie.dateLimiteInscription|date ('d/m/y ') }} </td>
                 <td> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }}  </td>

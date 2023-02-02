@@ -60,7 +60,7 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'Sortie créee!!');
 
             //todo: rediriger vers page détail des sorties.
-            return $this->redirectToRoute('main_home');
+            return $this->redirectToRoute('sortie_liste');
         }
 
         return $this->render('sortie/CreationSortie.html.twig', [
@@ -78,7 +78,7 @@ class SortieController extends AbstractController
         $sorties = $sortieRepository->listeSortiesDefaut($user);
 
        //je recupere ma liste de sorties trier par defaut
-       // $campuss = $campusRepository -> findAll();
+       //$campuss = $campusRepository -> findAll();
 
         return $this->render('sortie/liste.html.twig', ["sorties" => $sorties,
            // "campuss" => $campuss,

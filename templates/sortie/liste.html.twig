@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    </div>
+    <div>
 
     <table class="table table-dark table-striped">
         <br>
@@ -28,6 +28,7 @@
                         X
                     {% endif %}
                 </td>
+
 {#                <td>#}
 {#                    <a href="{{ path('profilOrganisateur_main',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.nom }}</a>#}
 {#                </td>#}
@@ -68,10 +69,11 @@
 {#                        {% endif %}#}
 {#                    {% endif %}#}
 {#                </td>#}
+
             </tr>
         {% endfor %}
     </table>
-
+        </div>
 {% endblock %}
 
 {% block title %}

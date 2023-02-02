@@ -28,48 +28,7 @@
                         X
                     {% endif %}
                 </td>
-
-{#                <td>#}
-{#                    <a href="{{ path('profilOrganisateur_main',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.nom }}</a>#}
-{#                </td>#}
-{#                #}{#                {% if sortie.organisateur.nom == app.user.nom %} #}
-{#                #}{#                <td><a href=" #" title="Modifier">Modifier</a> -<a href=" #" title="Publier">Publier</a></td> #}
-{#                #}{#                {% elseif app.user in sortie.participants  %} #}
-{#                #}{#                    <td><a href="{{ path('sortie_details',{'id':sortie.id}) }}"title="Afficher">Afficher</a> - <a href=" #" title="Se désister">Se Désister</a></td> #}
-{#                #}{#                 {% else %} #}
-{#                #}{#                     <td><a href="{{ path('sortie_details',{'id':sortie.id}) }}"title="Afficher">Afficher</a> - <a href="{{ path('sortie_sinscrire',{'id':sortie.id}) }}" title="S'inscrire'">S'inscrire'</a></td> #}
-{#                #}{#                {% endif %} #}
-
-{#                <td>#}
-{#                    {% if sortie.etat.id == 1 %}#}
-{#                        <a>Modifier</a> - <a href="{{ path('sortie_publier',{'id':sortie.id}) }} " title="Publier">Publier</a>#}
-{#                    {% else %}#}
-{#                        <a href="{{ path('sortie_details',{'id':sortie.id}) }} " title="Afficher">Afficher</a>#}
-{#                    {% endif %}#}
-
-{#                    {% if sortie.etat.id == 2 %}#}
-{#                        {% if sortie.organisateur.pseudo == app.user.pseudo %}#}
-{#                            - <a href="{{ path('sortie_annuler',{'id':sortie.id}) }}"> Annuler </a>#}
-{#                        {% elseif app.user in sortie.participants %}#}
-{#                            - <a href="{{ path('sortie_desister', {'id':sortie.id}) }}">Se désister</a>#}
-{#                        {% elseif sortie.participants | length < sortie.nbInscriptionsMax#}
-{#                            and date() <= sortie.dateLimiteInscription %}#}
-{#                            - <a href="{{ path('sortie_sinscrire',{'id':sortie.id}) }}"#}
-{#                                 title="S'inscrire">S'inscrire</a>#}
-{#                        {% endif %}#}
-
-{#                    {% endif %}#}
-
-{#                    {% if sortie.etat.id == 3 %}#}
-{#                        {% if sortie.organisateur.pseudo == app.user.pseudo %}#}
-{#                            - <a href={{ path('sortie_annuler',{'id':sortie.id}) }}> Annuler </a>#}
-{#                        {% elseif app.user in sortie.participants %}#}
-{#                            - <a href="{{ path('sortie_desister', {'id':sortie.id}) }}">Se désister</a>#}
-
-{#                        {% endif %}#}
-{#                    {% endif %}#}
-{#                </td>#}
-
+            <td>{{ sortie.organisateur.pseudo }}</td>
             </tr>
         {% endfor %}
     </table>

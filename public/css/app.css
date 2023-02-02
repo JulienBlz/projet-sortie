@@ -44,17 +44,31 @@ form input, form select, form textarea {
     border: 1px solid #ccc;
 }
 
-form .btn {
-    margin-top: 1em;
-    padding: 0.5em 1em;
-    font-size: 1em;
-    background-color: transparent;
-    color: #fff;
-    border: 1px solid #fff;
+form button[type="submit"] {
+    width: 30%;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
     border-radius: 4px;
+    background-color: transparent;
+    color: white;
     cursor: pointer;
 }
 
+form button[type="submit"]:hover {
+    background-color: white;
+    color: #162641;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 10px;
+    margin: 0 auto;
+}
+
+th, td {
+    padding: 10px;
+}
 
 
 

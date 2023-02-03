@@ -52,9 +52,7 @@ class SortieRepository extends ServiceEntityRepository
             ->andWhere('s.organisateur = :user OR s.etat != 1')
             ->setParameter('user', $user)->getQuery()->getResult();
 
-        //  $paginator = new Paginator($qb->getQuery());
 
-        // return $paginator;
     }
 
 //    /**
